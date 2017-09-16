@@ -1,0 +1,18 @@
+import json
+
+fileobj = open('ecglists.json', 'r')
+filedata = fileobj.read()
+j = json.loads(filedata)
+
+# lookup = 0
+# while True:
+#   lookup = input('What id do you want the decklist for?\n')
+#   print j[lookup - 1]['slots']
+
+count = 0
+for i in range(len(j)):
+    if 'erase' in j[i]['slots']:
+        print str(j[i]['name'])
+        count += 1
+
+print str(count) + " out of " + str(len(j)) + ' contain Erase'

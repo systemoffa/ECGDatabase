@@ -1,0 +1,28 @@
+from bs4 import BeautifulSoup
+import requests
+import json
+
+url0 = 'http://decks.epiccardgame.com/api/public/decklist/'
+url1 = '.json'
+filename = 'ecglists.json'
+fileobject = open(filename, "w")
+
+alldecks = ''
+soupstr = 'test'
+i = 1
+
+for i in range(1, 200):
+    deck = requests.get(url0 + str(i) + url1)
+    soup = BeautifulSoup(deck.content, 'html.parser')
+    soupstr = str(soup)
+    try:
+        parsed = json.loads(soupstr)
+        formattedparse = json.dumps(parsed, indent=4, sort_keys=True)
+        alldecks = alldecks + str(formattedparse) + ',\n'
+        print(soupstr)
+    except ValueError:
+        print("Looks like this list is private")
+        continue
+
+fileobject.write('[ \n' + alldecks + '\n ]')
+fileobject.close()
