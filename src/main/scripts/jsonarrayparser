@@ -1,3 +1,5 @@
+#!/usr/local/bin/python
+
 import json
 
 fileobj = open('ecglists.json', 'r')
