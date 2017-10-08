@@ -19,5 +19,19 @@ pyb install_dependencies
 To perform a build, i.e. execute unit tests and package the deployment artifact:
 
 ```bash
-pyb -X package
+pyb -X publish
 ```
+
+
+## Run Locally
+
+To build, deploy, and run locally you can run the following script from within the **project
+root directory**:
+
+```bash
+source build/build_and_run_locally.sh
+```
+
+Afterwards you can test the application from within your web browser:
+
+* [http://localhost:5000/all_decks](http://localhost:5000/all_decks)

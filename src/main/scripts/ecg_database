@@ -1,0 +1,5 @@
+#!/usr/local/bin/python
+
+if __name__ == "__main__":
+    from ecg.database.ui import manager
+    manager.run()
