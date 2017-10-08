@@ -1,4 +1,6 @@
 .idea/
 *.iml
 venv/
+venv_deploy/
 target/
+.coverage
