@@ -1,4 +1,64 @@
-foundry_decks = [
+BASE_URL = "https://epicweb.azurewebsites.net"
+
+def get_tournaments(type = None):
+    from lxml import html
+    import requests
+    page = requests.get(BASE_URL + "/Tournaments/Decks")
+    tree = html.fromstring(page.content)
+    rows = tree.xpath("/html/body/div[2]/table/tbody/tr")
+    tournaments = []
+    for row in rows:
+        tournaments.append (
+            {
+                "name" : row[0].text_content().strip(),
+                "date" : row[1].text_content().strip(),
+                "type" : row[2].text_content().strip(),
+                "url" : row[3].find("p/a").get("href")
+            }
+        )
+    if type:
+        tournaments = filter(lambda t : t["type"] == type, tournaments)
+    return tournaments
+
+def with_decks(tournament):
+    from lxml import html
+    import requests
+    page = requests.get(BASE_URL + tournament["url"])
+    tree = html.fromstring(page.content)
+    rows = tree.xpath("/html/body/div[2]/div[3]/div")
+    decks = []
+    for row in rows:
+        player = row.find("div/div/div[1]/h4/a").text_content().strip()
+        cols = row.xpath("div/div/div[2]/div/div[2]/div")
+        cards = []
+        for col in cols:
+            i = 0
+            for card in col.iterchildren():
+                if i % 2 == 0:
+                    name = card.find("span").text_content().strip()
+                else:
+                    qty = card.text_content().strip()
+                    cards.append (
+                        {
+                            "name" : name,
+                            "qty" : qty
+                        }
+                    )
+                i += 1
+        decks.append (
+            {
+                "player" : player,
+                "deck" : cards
+            }
+        )
+    return {
+        "tournament" : tournament,
+        "decks" : decks
+    }
+
+decks = map(with_decks, get_tournaments("constructed"))
+
+epic_foundry_decks = [
     {
         "date_creation": "2016-01-15T11:41:43-08:00",
         "date_update": "2016-10-22T06:48:58-07:00",

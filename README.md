@@ -34,4 +34,5 @@ source build/build_and_run_locally.sh
 
 Afterwards you can test the application from within your web browser:
 
-* [http://localhost:5000/all_decks](http://localhost:5000/all_decks)
+* [http://localhost:5000/foundry_decks](http://localhost:5000/foundry_decks)
+* [http://localhost:5000/tournament_decks](http://localhost:5000/tournament_decks)
