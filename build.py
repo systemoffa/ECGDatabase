@@ -23,4 +23,5 @@ def set_properties(project):
     project.depends_on("urllib3", "==1.22")
     project.depends_on("certifi", "==2017.7.27.1")
     project.depends_on("chardet", "==3.0.4")
+    project.depends_on("lxml", "==4.0.0")
     project.build_depends_on("mock")
